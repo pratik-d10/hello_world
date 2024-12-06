@@ -1,11 +1,14 @@
-# Use the official NGINX image from the Docker Hub
-FROM nginx:alpine
+# Use the official Ubuntu base image
+FROM ubuntu:latest
 
-# Copy the hello.txt file to the default NGINX html directory
-COPY hello.txt /usr/share/nginx/html/
+# Install Nginx
+RUN apt-get update && apt-get install -y nginx && rm -rf /var/lib/apt/lists/*
 
-# Expose port 80 to the outside world
+# Copy the hello.html file to the Nginx default directory
+COPY hello.html /var/www/html/
+
+# Expose port 80
 EXPOSE 80
 
-# Start NGINX when the container launches
+# Start Nginx in the foreground
 CMD ["nginx", "-g", "daemon off;"]
